@@ -1,0 +1,36 @@
+{
+  "name": "@analyze-cli/cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "analyze-cli": "./bin/analyze.js"
+  },
+  "description": "",
+  "keywords": [],
+  "author": "ybpx",
+  "license": "MIT",
+  "homepage": "https://github.com/gkn1234/openx-ui/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkn1234/openx-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gkn1234/openx-ui/issues"
+  },
+  "scripts": {
+    "build": "tsup --minify",
+    "test": "echo test"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "cac": "^6.7.14",
+    "chalk": "4"
+  },
+  "devDependencies": {
+    "@analyze-cli/shared": "workspace:^",
+    "@analyze-cli/core": "workspace:^"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "D:\\Desktop\\项目\\自己实现依赖分析\\analyze-cli": {
+    "mtime": 1727745908450.0598,
+    "dependencies": {
+      "name": "analyze-cli",
+      "version": "0.0.0",
+      "packages": {
+        "@types/node": {
+          "version": "^22.7.0",
+          "type": "devDependency"
+        },
+        "tsup": {
+          "version": "^8.3.0",
+          "type": "devDependency"
+        },
+        "typescript": {
+          "version": "^5.6.2",
+          "type": "devDependency"
+        },
+        "vite": {
+          "version": "^5.4.8",
+          "type": "devDependency"
+        }
+      }
+    },
+    "depth": 1
+  }
+}

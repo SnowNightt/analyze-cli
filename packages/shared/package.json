@@ -1,0 +1,37 @@
+{
+  "name": "@analyze-cli/shared",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [
+    "component library"
+  ],
+  "author": "ybpx",
+  "license": "MIT",
+  "homepage": "https://github.com/gkn1234/openx-ui/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkn1234/openx-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gkn1234/openx-ui/issues"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "echo test"
+  },
+  "main": "./dist/analyze-cli-shared.umd.js",
+  "module": "./dist/analyze-cli-shared.mjs",
+  "types": "",
+  "exports": {
+    ".": {
+      "require": "./dist/analyze-cli-shared.umd.js",
+      "module": "./dist/analyze-cli-shared.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

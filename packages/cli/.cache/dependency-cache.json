@@ -1,0 +1,235 @@
+{
+  "D:\\Desktop\\项目\\自己实现依赖分析\\analyze-cli\\packages\\cli": {
+    "mtime": 1727764336153.5967,
+    "dependencies": {
+      "name": "@analyze-cli/cli",
+      "version": "1.0.0",
+      "packages": {
+        "cac": {
+          "version": "^6.7.14",
+          "type": "dependency",
+          "packages": {
+            "@babel/core": {
+              "version": "^7.12.10",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@babel/plugin-syntax-typescript": {
+              "version": "^7.12.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@rollup/plugin-commonjs": {
+              "version": "^17.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@rollup/plugin-node-resolve": {
+              "version": "^11.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@types/fs-extra": {
+              "version": "^9.0.5",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@types/jest": {
+              "version": "^26.0.19",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "@types/mri": {
+              "version": "^1.1.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "cz-conventional-changelog": {
+              "version": "^2.1.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "esbuild": {
+              "version": "^0.8.21",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "eslint-config-rem": {
+              "version": "^3.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "execa": {
+              "version": "^5.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "fs-extra": {
+              "version": "^9.0.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "globby": {
+              "version": "^11.0.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "husky": {
+              "version": "^1.2.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "jest": {
+              "version": "^24.9.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "lint-staged": {
+              "version": "^8.1.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "markdown-toc": {
+              "version": "^1.2.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "mri": {
+              "version": "^1.1.6",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "prettier": {
+              "version": "^2.2.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "rollup": {
+              "version": "^2.34.2",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "rollup-plugin-dts": {
+              "version": "^2.0.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "rollup-plugin-esbuild": {
+              "version": "^2.6.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "semantic-release": {
+              "version": "^17.3.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "sucrase": {
+              "version": "^3.16.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "ts-jest": {
+              "version": "^26.4.4",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "ts-node": {
+              "version": "^9.1.1",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "typedoc": {
+              "version": "^0.19.2",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "typescript": {
+              "version": "^4.1.2",
+              "type": "devDependency",
+              "packages": {}
+            }
+          }
+        },
+        "chalk": {
+          "version": "4",
+          "type": "dependency",
+          "packages": {
+            "ansi-styles": {
+              "version": "^4.1.0",
+              "type": "dependency",
+              "packages": {}
+            },
+            "supports-color": {
+              "version": "^7.1.0",
+              "type": "dependency",
+              "packages": {}
+            },
+            "ava": {
+              "version": "^2.4.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "coveralls": {
+              "version": "^3.0.7",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "execa": {
+              "version": "^4.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "import-fresh": {
+              "version": "^3.1.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "matcha": {
+              "version": "^0.7.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "nyc": {
+              "version": "^15.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "resolve-from": {
+              "version": "^5.0.0",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "tsd": {
+              "version": "^0.7.4",
+              "type": "devDependency",
+              "packages": {}
+            },
+            "xo": {
+              "version": "^0.28.2",
+              "type": "devDependency",
+              "packages": {}
+            }
+          }
+        },
+        "@analyze-cli/shared": {
+          "version": "workspace:^",
+          "type": "devDependency",
+          "packages": {}
+        },
+        "@analyze-cli/core": {
+          "version": "workspace:^",
+          "type": "devDependency",
+          "packages": {
+            "chalk": {
+              "version": "4",
+              "type": "dependency",
+              "packages": {}
+            }
+          }
+        }
+      }
+    },
+    "depth": 2
+  }
+}
