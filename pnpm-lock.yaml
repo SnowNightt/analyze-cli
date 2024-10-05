@@ -42,8 +42,16 @@ importers:
       chalk:
         specifier: '4'
         version: 4.1.2
+    devDependencies:
+      '@analyze-cli/shared':
+        specifier: workspace:^
+        version: link:../shared
 
-  packages/shared: {}
+  packages/shared:
+    dependencies:
+      chalk:
+        specifier: '4'
+        version: 4.1.2
 
 packages:
 

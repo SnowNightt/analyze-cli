@@ -1,6 +1,6 @@
 {
   "D:\\Desktop\\项目\\自己实现依赖分析\\analyze-cli\\packages\\cli": {
-    "mtime": 1727764336153.5967,
+    "mtime": 1728090969504.979,
     "dependencies": {
       "name": "@analyze-cli/cli",
       "version": "1.0.0",
@@ -215,7 +215,13 @@
         "@analyze-cli/shared": {
           "version": "workspace:^",
           "type": "devDependency",
-          "packages": {}
+          "packages": {
+            "chalk": {
+              "version": "4",
+              "type": "dependency",
+              "packages": {}
+            }
+          }
         },
         "@analyze-cli/core": {
           "version": "workspace:^",
@@ -224,6 +230,11 @@
             "chalk": {
               "version": "4",
               "type": "dependency",
+              "packages": {}
+            },
+            "@analyze-cli/shared": {
+              "version": "workspace:^",
+              "type": "devDependency",
               "packages": {}
             }
           }

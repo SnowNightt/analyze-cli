@@ -1,10 +1,11 @@
 import { cac } from "cac";
-// import { analyzeDependencies } from "./analyze";
-import { analyzeImports } from "./importAnalyzer.ts";
 import { analyzeDependencies } from "@analyze-cli/core";
 import { saveToJson } from "./output.ts";
 import { ensureCacheDirectoryExists } from "./isCacheDirExisit.ts";
-
+// import { ensureTsExtension } from "./utils.ts";
+import { ensureTsExtension } from "@analyze-cli/core";
+import {resolveTsconfigAlias} from '@analyze-cli/core'
+import { scanProjectFiles } from "@analyze-cli/core";
 const cli = cac("analyze-cli");
 // 分析项目依赖
 cli
@@ -28,10 +29,20 @@ cli
   });
 
 // 分析文件引用
+// cli
+//   .command("analyze <file>", "Analyze file imports")
+//   .action(async (file: string) => {
+//     await analyzeImports(file);
+//   });
+
 cli
-  .command("analyze <file>", "Analyze file imports")
-  .action(async (file: string) => {
-    await analyzeImports(file);
+  .command("analyze <targetFile>", "分析项目中哪些文件导入了指定的 .ts 文件")
+  .option("-r,--root <root>", "要扫描的项目根目录", { default: "." })
+  .action(async (targetFile: string, options: { root: string }) => {
+    // 补全 .ts 后缀
+    const resolvedTargetFile = await ensureTsExtension(targetFile);
+    const aliases = await resolveTsconfigAlias(options.root);
+    await scanProjectFiles(options.root, resolvedTargetFile, aliases);
   });
 
 cli.help();

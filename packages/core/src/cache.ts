@@ -1,4 +1,3 @@
-// packages/analyze-dependencies/src/cache.ts
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { statSync, mkdirSync } from "fs";
 import { join } from "path";

@@ -16,22 +16,21 @@
     "url": "https://github.com/gkn1234/openx-ui/issues"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "tsup",
     "test": "echo test"
   },
-  "main": "./dist/analyze-cli-shared.umd.js",
-  "module": "./dist/analyze-cli-shared.mjs",
-  "types": "",
+  "main": "dist/index.js",
   "exports": {
     ".": {
-      "require": "./dist/analyze-cli-shared.umd.js",
-      "module": "./dist/analyze-cli-shared.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
   },
   "files": [
     "dist",
     "README.md"
   ],
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "chalk": "4"
+  }
 }

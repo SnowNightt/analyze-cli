@@ -1,2 +1,1 @@
-import { hi } from "./hello";
-export { hi };
+export * from "./logger.ts";

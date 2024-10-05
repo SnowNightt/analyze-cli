@@ -1,13 +1,14 @@
 import { getProjectInfo, getDependencyTree } from "./utils.ts";
-import chalk from "chalk";
 import { createCacheManager } from "./cache.ts";
+import { logger } from "@analyze-cli/shared";
 
 export const analyzeDependencies = async (dir: string, depth: number = 1) => {
   // 初始化缓存管理器
   const cacheManager = await createCacheManager();
   // 首先检查缓存是否可用
   if (await cacheManager.isUpToDate(dir, depth)) {
-    console.log(chalk.yellow("从缓存中加载依赖数据...\n"));
+    // console.log(chalk.yellow("从缓存中加载依赖数据...\n"));
+    logger.info('从缓存中加载依赖数据...\n')
     return await cacheManager.getDependencies(dir); // 直接返回缓存数据
   }
 
@@ -16,7 +17,8 @@ export const analyzeDependencies = async (dir: string, depth: number = 1) => {
   );
   const packages: Record<string, any> = {};
 
-  console.log(chalk.blue("依赖分析中...\n"));
+  // console.log(chalk.blue("依赖分析中...\n"));
+  logger.define('依赖分析中...\n',"magenta")
 
   // 并行处理
   const processDependencies = async (
@@ -51,7 +53,7 @@ export const analyzeDependencies = async (dir: string, depth: number = 1) => {
   prodDeps.forEach((dep) => Object.assign(packages, dep));
   devDeps.forEach((dep) => Object.assign(packages, dep));
 
-  console.log(chalk.green("项目依赖分析完成!\n"));
+  // console.log(chalk.green("项目依赖分析完成!\n"));
 
   const result = {
     name: name || "__root__",

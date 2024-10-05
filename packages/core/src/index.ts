@@ -1,9 +1,4 @@
-// 分析当前项目的依赖
-import { analyzeDependencies } from "./analyze.ts";
-import { findPackageJson, getDependencyTree, getProjectInfo } from "./utils.ts";
-export {
-  analyzeDependencies,
-  findPackageJson,
-  getDependencyTree,
-  getProjectInfo,
-};
+export * from "./aliasResolver.ts";
+export * from "./scanner.ts";
+export * from "./analyze.ts";
+export * from "./utils.ts";

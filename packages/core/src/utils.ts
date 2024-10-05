@@ -1,6 +1,7 @@
 import fs from "fs/promises";
+import {existsSync} from "fs";
 import path from "path";
-
+import { access } from "fs/promises";
 // 查找并解析 package.json 文件
 export const findPackageJson = async (dir: string): Promise<string | null> => {
   const packageJsonPath = path.join(dir, "package.json");
@@ -75,3 +76,75 @@ export const getDependencyTree = async (
     return {};
   }
 };
+
+
+// 分析文件引用
+
+// 解析文件内容中的 import 路径
+export function parseImportPaths(content: string): string[] {
+  const regex = /import\s+[^'"]*['"]([^'"]+)['"]/g;
+  const imports: string[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(content)) !== null) {
+    imports.push(match[1]);
+  }
+
+  return imports;
+}
+
+// 根据 import 路径、别名和后缀补全解析真实路径
+export function resolveFilePath(
+  importPath: string,
+  file: string,
+  rootDir: string,
+  aliases: Record<string, string> | null
+): string {
+  let resolvedImportPath = importPath;
+
+  // 处理路径别名
+  if (aliases) {
+    for (const alias in aliases) {
+      if (importPath.startsWith(alias)) {
+        resolvedImportPath = path.join(
+          aliases[alias],
+          importPath.slice(alias.length)
+        );
+        break;
+      }
+    }
+  }
+
+  // 如果 importPath 不是绝对路径，则相对于当前文件解析
+  if (!path.isAbsolute(resolvedImportPath)) {
+    resolvedImportPath = path.resolve(path.dirname(file), resolvedImportPath);
+  }
+
+  // 自动补全 .ts 后缀
+  if (!path.extname(resolvedImportPath)) {
+    const tsPath = resolvedImportPath + ".ts";
+    if (existsSync(tsPath)) {
+      return path.normalize(tsPath);
+    }
+  } else if (path.extname(resolvedImportPath) === ".ts") {
+    return path.normalize(resolvedImportPath);
+  }
+
+  return path.normalize(resolvedImportPath);
+}
+
+// 自动补全后缀的函数
+export async function ensureTsExtension(filePath: string): Promise<string> {
+  if (!filePath.endsWith(".ts")) {
+    const tsFilePath = `${filePath}.ts`;
+    try {
+      // 确认文件存在
+      await access(tsFilePath);
+      return tsFilePath;
+    } catch (error) {
+      console.error(`文件 ${tsFilePath} 不存在`);
+      process.exit(1);
+    }
+  }
+  return filePath;
+}
