@@ -1,6 +1,7 @@
 // tsconfig.base.json
 {
   "compilerOptions": {
+    "types": ["vitest/globals"], // 确保这里包含 Vitest
     // "declaration": true,
     // "emitDeclarationOnly": true,
     "noEmit":true,

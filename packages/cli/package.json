@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "tsup --minify",
-    "test": "echo test"
+    "test": "vitest -w",
+    "test:coverage": "vitest run --coverage"
   },
   "files": [
     "dist",
@@ -30,7 +31,8 @@
     "chalk": "4"
   },
   "devDependencies": {
+    "@analyze-cli/core": "workspace:^",
     "@analyze-cli/shared": "workspace:^",
-    "@analyze-cli/core": "workspace:^"
+    "@vitest/coverage-v8": "2.1.2"
   }
 }

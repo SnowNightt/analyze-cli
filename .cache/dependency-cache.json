@@ -1,6 +1,6 @@
 {
   "D:\\Desktop\\项目\\自己实现依赖分析\\analyze-cli": {
-    "mtime": 1727745908450.0598,
+    "mtime": 1728785395137.9277,
     "dependencies": {
       "name": "analyze-cli",
       "version": "0.0.0",
@@ -19,6 +19,10 @@
         },
         "vite": {
           "version": "^5.4.8",
+          "type": "devDependency"
+        },
+        "vitest": {
+          "version": "^2.1.2",
           "type": "devDependency"
         }
       }

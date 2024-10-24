@@ -7,5 +7,7 @@ export const ensureCacheDirectoryExists = () => {
   if (!existsSync(cacheDir)) {
     mkdirSync(cacheDir);
     console.log("缓存目录已创建: .cache");
+  } else {
+    return;
   }
 };

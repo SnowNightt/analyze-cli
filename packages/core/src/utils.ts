@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import {existsSync} from "fs";
 import path from "path";
 import { access } from "fs/promises";
 // 查找并解析 package.json 文件
@@ -39,7 +38,8 @@ export const getDependencyTree = async (
   currentDepth: number,
   maxDepth: number
 ) => {
-  if (currentDepth >= maxDepth) return {};
+  // 限制最大递归深度
+  if (currentDepth >= maxDepth || currentDepth >= 3) return {};
 
   try {
     const pkgPath = require.resolve(path.join(pkg, "package.json"));
@@ -77,60 +77,67 @@ export const getDependencyTree = async (
   }
 };
 
-
-// 分析文件引用
-
 // 解析文件内容中的 import 路径
-export function parseImportPaths(content: string): string[] {
-  const regex = /import\s+[^'"]*['"]([^'"]+)['"]/g;
-  const imports: string[] = [];
+export function parseImportPaths(fileContent: string): string[] {
+  const importRegex = /import\s.*?['"](.*?)['"]/g;
+  const importPaths: string[] = [];
   let match: RegExpExecArray | null;
 
-  while ((match = regex.exec(content)) !== null) {
-    imports.push(match[1]);
+  while ((match = importRegex.exec(fileContent)) !== null) {
+    importPaths.push(match[1]);
   }
 
-  return imports;
+  return importPaths;
 }
 
 // 根据 import 路径、别名和后缀补全解析真实路径
-export function resolveFilePath(
+export async function resolveFilePath(
   importPath: string,
-  file: string,
+  currentFile: string,
   rootDir: string,
   aliases: Record<string, string> | null
-): string {
-  let resolvedImportPath = importPath;
-
+): Promise<string | null> {
   // 处理路径别名
+
   if (aliases) {
+    // {'@': 'D:\\Desktop\\项目\\YBPX-Manage\\src\\src'}
+    // @/enum/cacheEnum
     for (const alias in aliases) {
       if (importPath.startsWith(alias)) {
-        resolvedImportPath = path.join(
+        const aliasPath = path.join(
           aliases[alias],
           importPath.slice(alias.length)
         );
-        break;
+        return await resolveWithTsExtension(aliasPath, rootDir);
       }
     }
   }
 
-  // 如果 importPath 不是绝对路径，则相对于当前文件解析
-  if (!path.isAbsolute(resolvedImportPath)) {
-    resolvedImportPath = path.resolve(path.dirname(file), resolvedImportPath);
-  }
+  // 处理相对路径或绝对路径
+  const resolvedPath = path.resolve(path.dirname(currentFile), importPath);
 
-  // 自动补全 .ts 后缀
-  if (!path.extname(resolvedImportPath)) {
-    const tsPath = resolvedImportPath + ".ts";
-    if (existsSync(tsPath)) {
-      return path.normalize(tsPath);
+  return await resolveWithTsExtension(resolvedPath, rootDir);
+}
+
+// 补全 .ts 后缀并检查文件存在
+async function resolveWithTsExtension(
+  resolvedPath: string,
+  rootDir: string
+): Promise<string | null> {
+  const tsFilePath = resolvedPath.endsWith(".ts")
+    ? resolvedPath
+    : `${resolvedPath}.ts`;
+
+  try {
+    const stats = await fs.stat(tsFilePath);
+    if (stats.isFile()) {
+      return path.normalize(tsFilePath); // 使用 path.normalize 规范化路径
     }
-  } else if (path.extname(resolvedImportPath) === ".ts") {
-    return path.normalize(resolvedImportPath);
+  } catch (error) {
+    return null;
   }
 
-  return path.normalize(resolvedImportPath);
+  return null;
 }
 
 // 自动补全后缀的函数
@@ -147,4 +154,9 @@ export async function ensureTsExtension(filePath: string): Promise<string> {
     }
   }
   return filePath;
+}
+
+// 比较路径，确保文件路径一致
+export function comparePaths(path1: string, path2: string): boolean {
+  return path.normalize(path1) === path.normalize(path2);
 }
