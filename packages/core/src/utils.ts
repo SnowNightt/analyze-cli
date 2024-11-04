@@ -36,15 +36,19 @@ export const getProjectInfo = async (dir: string) => {
 export const getDependencyTree = async (
   pkg: string,
   currentDepth: number,
-  maxDepth: number
+  maxDepth: number,
+  dependencyCache: Map<string, any>
 ) => {
   // 限制最大递归深度
-  if (currentDepth >= maxDepth || currentDepth >= 3) return {};
+  if (currentDepth >= maxDepth) return {};
+  if (dependencyCache.has(pkg)) {
+    console.log(111);
 
+    return dependencyCache.get(pkg);
+  }
   try {
     const pkgPath = require.resolve(path.join(pkg, "package.json"));
     const pkgJson = JSON.parse(await fs.readFile(pkgPath, "utf-8"));
-
     const dependencies = pkgJson.dependencies || {};
     const devDependencies = pkgJson.devDependencies || {};
     const subPackages: Record<string, any> = {};
@@ -55,7 +59,12 @@ export const getDependencyTree = async (
         subPackages[dep] = {
           version: dependencies[dep],
           type: "dependency",
-          packages: await getDependencyTree(dep, currentDepth + 1, maxDepth),
+          packages: await getDependencyTree(
+            dep,
+            currentDepth + 1,
+            maxDepth,
+            dependencyCache
+          ),
         };
       })
     );
@@ -65,11 +74,16 @@ export const getDependencyTree = async (
         subPackages[devDep] = {
           version: devDependencies[devDep],
           type: "devDependency",
-          packages: await getDependencyTree(devDep, currentDepth + 1, maxDepth),
+          packages: await getDependencyTree(
+            devDep,
+            currentDepth + 1,
+            maxDepth,
+            dependencyCache
+          ),
         };
       })
     );
-
+    dependencyCache.set(pkg, subPackages);
     return subPackages;
   } catch (error: any) {
     console.error(`Failed to load package ${pkg}:`, error.message);

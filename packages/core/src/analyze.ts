@@ -20,6 +20,9 @@ export const analyzeDependencies = async (dir: string, depth: number = 1) => {
   // console.log(chalk.blue("依赖分析中...\n"));
   logger.define('依赖分析中...\n',"magenta")
 
+  // 缓存依赖树,解决循环依赖的问题,同一个依赖被多个包引用提升性能
+  const dependencyCache = new Map<string, any>();
+
   // 并行处理
   const processDependencies = async (
     deps: Record<string, string>,
@@ -28,16 +31,17 @@ export const analyzeDependencies = async (dir: string, depth: number = 1) => {
     return Promise.all(
       Object.keys(deps).map(async (dep) => {
         const depVersion = deps[dep];
-        const result: any = {
-          version: depVersion,
-          type,
-        };
+        let result = dependencyCache.get(dep);
+        // 检查缓存
+        if (!result) {
+          result = { version: depVersion, type };
 
-        // 如果深度大于 1，递归获取子依赖
-        if (depth > 1) {
-          result.packages = await getDependencyTree(dep, 1, depth);
+          // 如果深度大于1，递归获取子依赖
+          if (depth > 1) {
+            result.packages = await getDependencyTree(dep, 1, depth, dependencyCache);
+          }
+          dependencyCache.set(dep, result); // 缓存依赖树
         }
-
         return { [dep]: result };
       })
     );

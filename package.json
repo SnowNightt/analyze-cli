@@ -10,6 +10,7 @@
   "scripts": {
     "build:cli": "pnpm --filter ./packages/** run build",
     "test": "vitest -w",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "dev:all": "pnpm -r run dev"
   }
 }
