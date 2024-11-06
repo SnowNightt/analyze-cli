@@ -30,10 +30,12 @@
     "README.md"
   ],
   "dependencies": {
-    "chalk": "4"
+    "chalk": "4",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@analyze-cli/shared": "workspace:^",
+    "@types/js-yaml": "^4.0.9",
     "@vitest/coverage-v8": "2.1.2"
   }
 }
