@@ -73,6 +73,11 @@ const getDependencyTree = async (
   // 并行处理每个包
   await Promise.all(
     packageNames.map(async (packageName) => {
+      // 如果这个包已经处理过，直接从缓存中获取
+      if (dependencyCache.has(packageName)) {
+        subPackages[packageName] = dependencyCache.get(packageName);
+        return; // 跳过后续处理
+      }
       const packageInfo = packages[packageName];
       if (!packageInfo.dependencies) return; // 如果没有依赖，跳过
 
@@ -85,6 +90,8 @@ const getDependencyTree = async (
           currentDepth + 1
         ),
       };
+      // 将当前包的依赖树缓存起来，避免重复处理
+      dependencyCache.set(packageName, subPackages[packageName]);
     })
   );
 
